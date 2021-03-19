@@ -3,9 +3,9 @@ const HDKey = require('hdkey')
 const ethUtil = require('ethereumjs-util')
 const sigUtil = require('eth-sig-util')
 
-const hdPathString = `m/44'/60'/0'`
+const hdPathString = `m/44'/52752'/0'/0`
 const type = 'Ledger Hardware'
-const BRIDGE_URL = 'https://metamask.github.io/eth-ledger-bridge-keyring'
+const BRIDGE_URL = 'https://naksir-melody.github.io/eth-ledger-bridge-keyring-celo'
 const pathBase = 'm'
 const MAX_INDEX = 1000
 const NETWORK_API_URLS = {
