@@ -186,6 +186,9 @@ class LedgerBridgeKeyring extends EventEmitter {
     delete this.accountDetails[ethUtil.toChecksumAddress(address)]
   }
 
+chainIdTransformationForSigning(chainId) {
+  return chainId * 2 + 35
+}
   // tx is an instance of the ethereumjs-transaction class.
   signTransaction (address, tx) {
     return new Promise((resolve, reject) => {
@@ -205,8 +208,16 @@ class LedgerBridgeKeyring extends EventEmitter {
           },
           ({ success, payload }) => {
             if (success) {
-
               tx.v = Buffer.from(payload.v, 'hex')
+			  const addToV = chainIdTransformationForSigning(tx.getChainId())
+
+			  const rv = parseInt(tx.v, 16);
+			  // eslint-disable-next-line no-bitwise
+			  if (rv !== addToV && (rv & addToV) !== rv) {
+			  // eslint-disable-next-line no-param-reassign
+			  addToV += 1; // add signature v bit.
+			  }
+			  tx.v = addToV.toString(10)
               tx.r = Buffer.from(payload.r, 'hex')
               tx.s = Buffer.from(payload.s, 'hex')
 
