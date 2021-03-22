@@ -210,11 +210,12 @@ class LedgerBridgeKeyring extends EventEmitter {
               tx.r = Buffer.from(payload.r, 'hex')
               tx.s = Buffer.from(payload.s, 'hex')
 
+
               const valid = tx.verifySignature()
               if (valid) {
                 resolve(tx)
               } else {
-                reject(new Error('Ledger: The transaction signature is not valid'))
+                reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+tx.r+" "+tx.s))
               }
             } else {
               reject(new Error(payload.error || 'Ledger: Unknown error while signing transaction'))
