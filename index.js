@@ -207,8 +207,9 @@ class LedgerBridgeKeyring extends EventEmitter {
           },
           ({ success, payload }) => {
             if (success) {
-              tx.v = Buffer.from(payload.v, 'hex')
+              //tx.v = Buffer.from(payload.v, 'hex')
 
+			  tx.v = 84475 
 			  let addToV = tempChainId * 2 + 35
 			  const rv = parseInt(tx.v, 16);
 			  // eslint-disable-next-line no-bitwise
@@ -217,7 +218,6 @@ class LedgerBridgeKeyring extends EventEmitter {
 			  addToV += 1; // add signature v bit.
 			  }
 			  //tx.v = addToV.toString(10)
-			  tx.v = 84475
               tx.r = Buffer.from(payload.r, 'hex')
               tx.s = Buffer.from(payload.s, 'hex')
 
