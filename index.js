@@ -207,6 +207,7 @@ class LedgerBridgeKeyring extends EventEmitter {
           },
           ({ success, payload }) => {
             if (success) {
+/*
               //tx.v = Buffer.from(payload.v, 'hex')
 
 			  tx.v = 84475 
@@ -218,6 +219,22 @@ class LedgerBridgeKeyring extends EventEmitter {
 			  addToV += 1; // add signature v bit.
 			  }
 			  //tx.v = addToV.toString(10)
+*/
+              tx.v = Buffer.from(payload.v, 'hex')
+			  let addToV = tempChainId * 2 + 35
+			  const rv = parseInt(tx.v, 16);
+
+			  console.log(`  addToV ${addToV} `);
+			  console.log(`  rv ${rv} `)
+
+			  // eslint-disable-next-line no-bitwise
+			  if (rv !== addToV && (rv & addToV) !== rv) {
+			  // eslint-disable-next-line no-param-reassign
+			  addToV += 1; // add signature v bit.
+			  }
+let temp = tx.v;
+			  tx.v = addToV.toString(10)
+			  console.log(`  tx.v ${tx.v} `)
               tx.r = Buffer.from(payload.r, 'hex')
               tx.s = Buffer.from(payload.s, 'hex')
 
@@ -225,8 +242,9 @@ class LedgerBridgeKeyring extends EventEmitter {
               if (valid) {
                 resolve(tx)
               } else {
-                reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+tx.r+" "+tx.s))
-              }
+                //reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+tx.r+" "+tx.s))
+                reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+addToV+" "+tempChainId+ " " + temp))
+             }
             } else {
               reject(new Error(payload.error || 'Ledger: Unknown error while signing transaction'))
             }
