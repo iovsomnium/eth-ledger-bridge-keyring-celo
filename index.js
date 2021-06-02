@@ -1,3 +1,4 @@
+Aasdfa
 const { EventEmitter } = require('events')
 const HDKey = require('hdkey')
 const ethUtil = require('ethereumjs-util')
@@ -191,7 +192,7 @@ class LedgerBridgeKeyring extends EventEmitter {
     return new Promise((resolve, reject) => {
       this.unlockAccountByAddress(address)
         .then((hdPath) => {
-		const tempChainId = ethUtil.bufferToHex(tx.getChainId())
+    const tempChainId = ethUtil.bufferToHex(tx.getChainId())
 
           tx.v = ethUtil.bufferToHex(tx.getChainId())
           tx.r = '0x00'
@@ -210,27 +211,27 @@ class LedgerBridgeKeyring extends EventEmitter {
 /*
               //tx.v = Buffer.from(payload.v, 'hex')
 
-			  tx.v = 84475 
-			  let addToV = tempChainId * 2 + 35
-			  const rv = parseInt(tx.v, 16);
-			  // eslint-disable-next-line no-bitwise
-			  if (rv !== addToV && (rv & addToV) !== rv) {
-			  // eslint-disable-next-line no-param-reassign
-			  addToV += 1; // add signature v bit.
-			  }
-			  //tx.v = addToV.toString(10)
+        tx.v = 84475 
+        let addToV = tempChainId * 2 + 35
+        const rv = parseInt(tx.v, 16);
+        // eslint-disable-next-line no-bitwise
+        if (rv !== addToV && (rv & addToV) !== rv) {
+        // eslint-disable-next-line no-param-reassign
+        addToV += 1; // add signature v bit.
+        }
+        //tx.v = addToV.toString(10)
 */
               // tx.v = Buffer.from(payload.v, 'hex')
-			  let addToV = tempChainId * 2 + 35
-			  const rv = parseInt(Buffer.from(payload.v, 'hex'), 16);
+        let addToV = tempChainId * 2 + 35
+        const rv = parseInt(payload.v, 16);
 
-			  // eslint-disable-next-line no-bitwise
-			  if (rv !== addToV && (rv & addToV) !== rv) {
-			  // eslint-disable-next-line no-param-reassign
-			  addToV += 1; // add signature v bit.
-			  }
+        // eslint-disable-next-line no-bitwise
+        if (rv !== addToV && (rv & addToV) !== rv) {
+        // eslint-disable-next-line no-param-reassign
+        addToV += 1; // add signature v bit.
+        }
 // let temp = tx.v;
-			  tx.v = addToV.toString(10)
+        tx.v =  Buffer.from(addToV.toString(16), 'hex')
               tx.r = Buffer.from(payload.r, 'hex')
               tx.s = Buffer.from(payload.s, 'hex')
 
@@ -491,3 +492,4 @@ class LedgerBridgeKeyring extends EventEmitter {
 
 LedgerBridgeKeyring.type = type
 module.exports = LedgerBridgeKeyring
+
