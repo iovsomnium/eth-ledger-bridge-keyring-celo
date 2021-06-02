@@ -239,7 +239,7 @@ class LedgerBridgeKeyring extends EventEmitter {
                 resolve(tx)
               } else {
                 //reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+tx.r+" "+tx.s))
-                reject(new Error('Ledger: The transaction signature is not valid '+ tx.getChainId() +" "+ tx.v + " "+addToV+" "+tempChainId +' '+rv+' '+ " JSON : "+ JSON.to(payload)+"tx"+tx))
+                reject(new Error('Ledger: The transaction signature is not valid '+ tx.getChainId() +" "+ tx.v + " "+addToV+" "+tempChainId +' '+rv+' '+ " JSON : "+ JSON.stringify(payload)+"tx"+tx))
              }
             } else {
               reject(new Error(payload.error || 'Ledger: Unknown error while signing transaction'))
