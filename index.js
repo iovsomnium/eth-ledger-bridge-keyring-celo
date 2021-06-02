@@ -243,7 +243,7 @@ let temp = tx.v;
                 resolve(tx)
               } else {
                 //reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+tx.r+" "+tx.s))
-                reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+addToV+" "+tempChainId+ " " + temp + payload))
+                reject(new Error('Ledger: The transaction signature is not valid'+ tx.getChainId() +" "+ tx.v + " "+addToV+" "+tempChainId+ " " + temp + JSON.stringify(payload)))
              }
             } else {
               reject(new Error(payload.error || 'Ledger: Unknown error while signing transaction'))
