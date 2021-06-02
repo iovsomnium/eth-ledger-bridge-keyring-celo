@@ -1,4 +1,3 @@
-Aasdfa
 const { EventEmitter } = require('events')
 const HDKey = require('hdkey')
 const ethUtil = require('ethereumjs-util')
