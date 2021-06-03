@@ -207,8 +207,9 @@ class LedgerBridgeKeyring extends EventEmitter {
           },
           ({ success, payload }) => {
             if (success) {
-              
+
         let addToV = tempChainId * 2 + 35
+        // EIP155 support. check/recalc signature v value.
         const rv = parseInt(payload.v, 16);
 
         // eslint-disable-next-line no-bitwise
